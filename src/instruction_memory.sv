@@ -11,8 +11,6 @@ module instruction_memory
   parameter rows = 64, 
   //size of words in b
   parameter word_size = 32 
-  //name of file containing instrs at compile time
-  parameter string binary_file = "instructions.txt";
 )
 (
   input logic [word_size-1:0] addr,
@@ -24,10 +22,10 @@ module instruction_memory
   
   //initialize memory based on file
   initial begin
-    $readmemh(binary_file, RAM); 
+    $readmemh("instruction_mem.txt", RAM); 
   end
 
   //output word alligned instruction
-  assign rd_instr = RAM[addr[word_size-1:2]]
+  assign rd_instr = RAM[addr[word_size-1:2]];
 
 endmodule

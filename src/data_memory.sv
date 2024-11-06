@@ -11,7 +11,7 @@ module data_memory(
     input   logic [31:0] addr,
     input   logic [31:0] write_data,
     output  logic [31:0] read_data
-)
+);
     //create a memory cell that is 32 bits x 32 registers
     logic [31:0] data [31:0];
 
