@@ -6,26 +6,20 @@
 
 
 module instruction_memory
-#(
-  //number of words
-  parameter rows = 64, 
-  //size of words in b
-  parameter word_size = 32 
-)
 (
-  input logic [word_size-1:0] addr,
-  output logic [word_size-1:0] rd_instr
+  input logic [31:0] addr,
+  output logic [31:0] rd_instr
 );
 
   //create a memory cell that is rows x word_size
-  logic [word_size-1:0] RAM [rows-1:0];
+  logic [31:0] RAM [63:0];
   
   //initialize memory based on file
   initial begin
-    $readmemh("instruction_mem.txt", RAM); 
+    $readmemh("instruction_mem.mem", RAM); 
   end
 
   //output word alligned instruction
-  assign rd_instr = RAM[addr[word_size-1:2]];
+  assign rd_instr = RAM[addr[31:2]];
 
 endmodule
