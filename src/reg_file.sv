@@ -18,7 +18,6 @@ module reg_file(
     //create a memory cell that is 32 bits x 32 registers
     logic [31:0] registers [31:0];
 
-
     //read data is combinational based on addr
     //in the case x0 is read, output should be 0
     assign read_data_1 = (addr_1 != 5'b0000) 
