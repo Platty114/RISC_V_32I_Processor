@@ -1,0 +1,7 @@
+//test cases for alu test
+//format is as follows
+//A     | B       | alu| expected
+0000_0001_0000_0002_0_0000_0003
+8000_0000_7FFF_FFFF_0_FFFF_FFFF
+8000_0000_7FFF_FFFF_1_0000_0001
+0000_0000_FFFF_FFFE_1_FFFF_FFFE
