@@ -36,7 +36,7 @@ module alu(
     assign logical_and = A & B;
     assign logical_sll = A << B;
     assign logical_srl = A >> B;
-    assign arithmetic_sra = A >>> B;
+    assign arithmetic_sra = $signed(A) >>> B;
     assign logical_slt = $signed(A) < $signed(B) ? 32'h0000_0001 : 32'h0000_0000;
     assign logical_sltu = A < B ? 32'h0000_0001 : 32'h0000_0000;
     assign equal = subtraction == 0 ? 1'b1 : 1'b0;
