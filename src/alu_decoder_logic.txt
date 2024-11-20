@@ -1,0 +1,13 @@
+ALU_OP | funct3 | op5 funct7 | alu_control | instruction 
+00         x         xx           0000          LW, SW
+01         x         xx           0001          beq, 
+10        000     00,01,10        0000          add, addi
+          000        11           0001          sub, subi
+          001        xx           0101          sll, slli
+          010        xx           1000          slt, slti
+          011        xx           1001          sltu, sltiu
+          100        xx           0010          xor, xori
+          101        x0           0110          srl, srli
+          101        x1           0111          sra, srai
+          110        xx           0011          or, ori
+          111        xx           0100          and, ani
