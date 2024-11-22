@@ -14,12 +14,12 @@ module decoder(
     output logic [3:0] alu_control,
     output logic alu_src,
     output logic [1:0] immediate_control,
-    output logic reg_write,
+    output logic reg_write
 );
     
     //use instructions op code, 3 bit funct 3 field, and bit
     //5 of funct 7 field to decode instruction
-    logic [6:0] op_code;
+    logic [6:0] opcode;
     logic [2:0] funct3;
     logic funct7_5;
 
@@ -45,5 +45,18 @@ module decoder(
     ); 
 
 
+    //alu decoder
+    alu_decoder ALU_DECODER(
+        .alu_op(alu_op), //input
+        .funct3(funct3), //input
+        .op5(opcode[5]), //input
+        .funct7(funct7_5), //input
+        .alu_control(alu_control) //output
+    );
+
+    //pc selection logic
+    //will need to be updated when other branch instructions
+    //implemented
+    assign pc_src = (branch & equal) | jump;
 
 endmodule

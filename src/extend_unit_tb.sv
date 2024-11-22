@@ -27,6 +27,8 @@ module extend_unit_tb();
 
     initial begin
 
+        #100;
+
         //initialize
         instruction = 32'h0000_0000;
         control = 2'b00;

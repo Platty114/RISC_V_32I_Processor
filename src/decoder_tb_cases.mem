@@ -1,0 +1,8 @@
+//test cases for control unit
+//format is as follows
+//instruction | alu_signals | expected
+//expected is in the format
+// {pc_src, result_src, mem_write, alu_control, alu_src, imm_control, reg_write}
+//lw
+|       instructions            | alu |     expected
+11111111110001001010001100000011_0_0_0_0_01_0_0000_1_00_1

@@ -42,6 +42,7 @@ module alu_tb();
         //test setup
         $readmemh("alu_tb_cases.mem", testvectors);
         vectornum = 0; errors = 0;
+        #100;
         reset = 1; #period; reset = 0;
         
 
