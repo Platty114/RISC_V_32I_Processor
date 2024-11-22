@@ -85,6 +85,26 @@ module decoder_tb();
 
     always @(negedge clk) begin
         if(~reset) begin
+            for(int i = 0; i < 12; i++) begin
+                if(
+                    expected_result[i] !== 1'bx
+                    &&
+                    result[i] !== expected_result[i]
+                ) begin
+                    $display(
+                       "Incorrect decoder result"
+                    );
+                    $display(
+                        "Expected: %b, got %b",
+                        expected_result,
+                        result
+                    );
+                    errors = errors + 1;
+                    break;
+                end
+            
+            end
+            /* 
             if(result !== expected_result) begin
                 $display(
                    "Incorrect decoder result"
@@ -95,7 +115,7 @@ module decoder_tb();
                     result
                 );
                 errors = errors + 1;
-            end
+            end */
 
             vectornum = vectornum + 1;
         end 
