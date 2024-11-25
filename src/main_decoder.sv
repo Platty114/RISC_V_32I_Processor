@@ -46,7 +46,7 @@ module main_decoder(
             I_TYPE_ALU: controls = 11'b0_0_00_0_1_00_1_10; 
             BEQ:        controls = 11'b1_0_xx_0_0_10_0_01;
             JAL:        controls = 11'b0_1_10_0_x_11_1_xx;
-            default:    controls = 11'bx_x_xx_x_x_xx_x_xx;
+            default:    controls = 11'bx_x_xx_0_x_xx_0_xx;
         endcase
         
     end

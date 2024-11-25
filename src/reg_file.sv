@@ -30,7 +30,7 @@ module reg_file(
     
 
     //write logic
-    always_ff @(posedge clk) begin 
+    always_ff @(negedge clk) begin 
         if(write_enable) begin
             registers[addr_3] = write_data;
         end  

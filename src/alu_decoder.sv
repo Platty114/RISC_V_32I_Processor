@@ -26,7 +26,8 @@ module alu_decoder(
         ALU_OR      = 3'b110,
         ALU_AND     = 3'b111;
 
-    logic [1:0] op5_funct7 = {op5, funct7};
+    logic [1:0] op5_funct7;
+    assign op5_funct7 = {op5, funct7};
 
     always_comb begin
 

@@ -13,16 +13,18 @@ module data_memory(
     output  logic [31:0] read_data
 );
     //create a memory cell that is 32 bits x 32 registers
-    logic [31:0] data [31:0];
+    logic [31:0] data [199:0];
+    
+    logic [31:0] next_write;
 
     //read data is combinational based on addr
     //data is read no matter what, even on write
     assign read_data = data[addr];
     
     //write logic
-    always_ff @(posedge clk) begin 
+    always_ff @(negedge clk) begin 
         if(write_enable) begin
-            data[addr] = write_data;
+            data[addr] <= write_data;
         end  
     end
-endmodule;
+endmodule
