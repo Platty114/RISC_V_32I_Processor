@@ -3,6 +3,7 @@
 module top(
     input logic clk,
     input logic reset,
+    input logic display_switch,
     output logic CA, CB, CC, CD, CE, CF, CG, DP,
     output logic [7:0] AN,
     output logic [15:0] LED
@@ -10,6 +11,7 @@ module top(
 
     logic [31:0] value_from_alu;
     logic [31:0] data_to_write;
+    logic [31:0] value_to_display;
     logic writting_to_mem;
     logic reset_buffer, reset_in;
     
@@ -17,6 +19,8 @@ module top(
         reset_buffer <= reset;
         reset_in <= reset_buffer;
     end
+    
+    assign value_to_display = (display_switch == 1'b1) ? data_to_write : value_from_alu;
 
     //risc-v processer
     risc_v_32_i PROCESSOR(
@@ -33,10 +37,10 @@ module top(
     seven_segment_display_subsystem DISPLAY_1(
         .clk(clk),
         .reset(reset_in),
-        .sec_dig1(value_from_alu[3:0]),
-        .sec_dig2(value_from_alu[7:4]),
-        .min_dig1(value_from_alu[11:8]),
-        .min_dig2(value_from_alu[15:12]),
+        .sec_dig1(value_to_display[3:0]),
+        .sec_dig2(value_to_display[7:4]),
+        .min_dig1(value_to_display[11:8]),
+        .min_dig2(value_to_display[15:12]),
         .CA(CA),
         .CB(CB),
         .CC(CC),
