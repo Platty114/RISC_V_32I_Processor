@@ -7,6 +7,7 @@
 
 module reg_file(
     input   logic clk,
+    input   logic clk_enable_n,
     input   logic write_enable,
     input   logic [4:0] addr_1,
     input   logic [4:0] addr_2,
@@ -30,10 +31,12 @@ module reg_file(
     
 
     //write logic
-    always_ff @(negedge clk) begin 
-        if(write_enable) begin
-            registers[addr_3] = write_data;
-        end  
+    always_ff @(posedge clk) begin 
+        if(clk_enable_n) begin
+            if(write_enable) begin
+                registers[addr_3] = write_data;
+            end  
+        end
     end
 
 

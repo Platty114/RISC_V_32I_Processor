@@ -14,6 +14,7 @@ module reg_file_tb();
 
     //uut signals
     logic clk = 1;
+    logic clk_enable_n;
     logic write_enable;
     logic [4:0] addr_1;
     logic [4:0] addr_2;
@@ -21,9 +22,12 @@ module reg_file_tb();
     logic [31:0] write_data;
     logic [31:0] read_data_1;
     logic [31:0] read_data_2;
+
+    assign clk_enable_n = ~clk;
     
     reg_file uut(
         .clk(clk),
+        .clk_enable_n(clk_enable_n),
         .write_enable(write_enable),
         .addr_1(addr_1),
         .addr_2(addr_2),

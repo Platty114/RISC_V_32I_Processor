@@ -10,13 +10,17 @@ module data_memory_tb();
 
     //uut signals
     logic clk = 1;
+    logic clk_enable_n;
     logic write_enable;
     logic [31:0] addr;
     logic [31:0] write_data;
     logic [31:0] read_data;
+    
+    assign clk_enable_n = ~clk;
 
     data_memory uut(
         .clk(clk),
+        .clk_enable_n(clk_enable_n),
         .write_enable(write_enable),
         .addr(addr),
         .write_data(write_data),

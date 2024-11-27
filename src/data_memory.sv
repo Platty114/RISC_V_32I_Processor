@@ -7,6 +7,7 @@
 
 module data_memory(
     input   logic clk,
+    input   logic clk_enable_n,
     input   logic write_enable,
     input   logic [31:0] addr,
     input   logic [31:0] write_data,
@@ -22,9 +23,11 @@ module data_memory(
     assign read_data = data[addr];
     
     //write logic
-    always_ff @(negedge clk) begin 
-        if(write_enable) begin
-            data[addr] <= write_data;
-        end  
+    always_ff @(posedge clk) begin 
+        if(clk_enable_n) begin
+            if(write_enable) begin
+                data[addr] <= write_data;
+            end  
+        end
     end
 endmodule
