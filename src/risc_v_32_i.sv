@@ -5,8 +5,6 @@
 
 module risc_v_32_i(
     input logic clk, //100Mhz clk
-    input logic clk_enable, //clk enable used to divide the clk
-    input logic clk_enable_n, //clk enable_n used to divide the clk for negedge
     input logic reset,
     output logic [31:0] value_from_alu,
     output logic [31:0] data_to_write,
@@ -49,8 +47,6 @@ module risc_v_32_i(
 
     data_path DATA_PATH(
         .clk(clk),
-        .clk_enable(clk_enable),
-        .clk_enable_n(clk_enable_n),
         .reset(reset),
         .pc_src(pc_src),
         .result_src(result_src),

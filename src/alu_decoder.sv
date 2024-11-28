@@ -39,14 +39,14 @@ module alu_decoder(
                 
                 case(funct3)
 
-                    ALU_ADD_SUB:  alu_control = (op5_funct7 === 2'b11) 
+                    ALU_ADD_SUB:  alu_control = (op5_funct7 == 2'b11) 
                         ?                       4'b0001 
                         :                       4'b0000;
                     ALU_SLL:      alu_control = 4'b0101;
                     ALU_SLT:      alu_control = 4'b1000;
                     ALU_SLTU:     alu_control = 4'b1001;
                     ALU_XOR:      alu_control = 4'b0010;
-                    ALU_SRL_SRA:  alu_control = (funct7 === 1'b0) 
+                    ALU_SRL_SRA:  alu_control = (funct7 == 1'b0) 
                         ?                       4'b0110
                         :                       4'b0111;
                     ALU_OR:       alu_control = 4'b0011;

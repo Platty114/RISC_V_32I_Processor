@@ -24,7 +24,7 @@ module decoder(
     logic funct7_5;
 
     //internal signals for decoding
-    logic branch, jump;
+    logic branch, jump, branch_correct;
     logic [1:0] alu_op;
 
     assign opcode = instruction[6:0];
@@ -54,9 +54,17 @@ module decoder(
         .alu_control(alu_control) //output
     );
 
+    branch_decoder BRANCH_DECODER(
+        .equal(equal),
+        .less_than(less_than),
+        .less_than_unsigned(less_than_unsigned),
+        .funct3(funct3),
+        .branch_correct(branch_correct)
+    );
+
     //pc selection logic
-    //will need to be updated when other branch instructions
-    //implemented
-    assign pc_src = (branch & equal) | jump;
+    //need to jump either when jump is asserted, or branch and 
+    //the branch value (equal, not equal, etc) is correct.
+    assign pc_src = (branch & branch_correct) | jump;
 
 endmodule

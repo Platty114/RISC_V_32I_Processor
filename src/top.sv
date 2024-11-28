@@ -1,7 +1,7 @@
 
 
 module top(
-    input logic clk,
+    input logic clk_100,
     input logic reset,
     input logic display_switch,
     output logic CA, CB, CC, CD, CE, CF, CG, DP,
@@ -14,7 +14,9 @@ module top(
     logic [31:0] value_to_display;
     logic writting_to_mem;
     logic reset_buffer, reset_in;
-    logic clk_enable, clk_enable_n;
+    logic clk;
+    logic locked;
+    logic pll_reset;
     
     always_ff @(posedge clk)begin
         reset_buffer <= reset;
@@ -25,18 +27,17 @@ module top(
     
     //used to divide the 100Mhz clock into a 25Mhz clock
     //on the nexus 4
-    clk_divider CLK_DIVIDER(
-        .clk(clk),
-        .clk_enable(clk_enable),
-        .clk_enable_n(clk_enable_n)
+    clk_wiz_0 CLK_GENERATOR(
+        .clk_100(clk_100),
+        .reset(1'b0),
+        .locked(locked),
+        .clk(clk)
     );
    
 
     //risc-v processer
     risc_v_32_i PROCESSOR(
         .clk(clk),
-        .clk_enable(clk_enable),
-        .clk_enable_n(clk_enable_n),
         .reset(reset_in),
         .value_from_alu(value_from_alu),
         .data_to_write(data_to_write),

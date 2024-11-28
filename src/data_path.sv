@@ -4,8 +4,6 @@
 
 module data_path(
     input logic clk,
-    input logic clk_enable,
-    input logic clk_enable_n,
     input logic reset,
     input logic pc_src,
     input logic [1:0] result_src,
@@ -66,7 +64,6 @@ module data_path(
         .pc_target(pc_target),
         .pc_src(pc_src),
         .clk(clk),
-        .clk_enable(clk_enable),
         .reset(reset),
         .pc(pc),
         .pc_plus_4(pc_plus_4)
@@ -82,7 +79,6 @@ module data_path(
     //register file
     reg_file REGISTER_FILE(
         .clk(clk),
-        .clk_enable_n(clk_enable_n),
         .write_enable(reg_write),
         .addr_1(rd_1),
         .addr_2(rd_2),
@@ -120,7 +116,6 @@ module data_path(
     //data_memory unit
     data_memory DATA_MEM(
         .clk(clk),
-        .clk_enable_n(clk_enable_n),
         .write_enable(mem_write),
         .addr(alu_result),
         .write_data(rs_2),
