@@ -4,17 +4,18 @@
 //
 
 module decoder(
-    input logic [31:0] instruction,
-    input logic equal,
-    input logic less_than,
-    input logic less_than_unsigned,
-    output logic pc_src,
-    output logic [1:0] result_src,
-    output logic mem_write, 
-    output logic [3:0] alu_control,
-    output logic alu_src,
-    output logic [1:0] immediate_control,
-    output logic reg_write
+    input logic [31:0]  instruction,
+    input logic         equal,
+    input logic         less_than,
+    input logic         less_than_unsigned,
+    output logic        pc_src,
+    output logic [1:0]  result_src,
+    output logic        mem_write, 
+    output logic [2:0]  mem_width,
+    output logic [3:0]  alu_control,
+    output logic        alu_src,
+    output logic [1:0]  immediate_control,
+    output logic        reg_write
 );
     
     //use instructions op code, 3 bit funct 3 field, and bit
@@ -54,6 +55,7 @@ module decoder(
         .alu_control(alu_control) //output
     );
 
+    //branch decoder
     branch_decoder BRANCH_DECODER(
         .equal(equal),
         .less_than(less_than),
@@ -61,6 +63,12 @@ module decoder(
         .funct3(funct3),
         .branch_correct(branch_correct)
     );
+
+    //load_store decoder
+    load_store_decoder LOAD_STORE_DECODER(
+        .funct3(funct3),
+        .mem_width(mem_width)
+    ); 
 
     //pc selection logic
     //need to jump either when jump is asserted, or branch and 

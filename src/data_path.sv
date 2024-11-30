@@ -8,6 +8,7 @@ module data_path(
     input logic pc_src,
     input logic [1:0] result_src,
     input logic mem_write, 
+    input logic [2:0] mem_width,
     input logic [3:0] alu_control,
     input logic alu_src,
     input logic [1:0] immediate_control,

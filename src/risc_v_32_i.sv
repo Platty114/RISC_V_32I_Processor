@@ -18,6 +18,7 @@ module risc_v_32_i(
     logic pc_src;
     logic [1:0] result_src;
     logic mem_write;
+    logic [2:0] mem_width;
     logic [3:0] alu_control;
     logic alu_src;
     logic [1:0] immediate_control;
@@ -51,6 +52,7 @@ module risc_v_32_i(
         .pc_src(pc_src),
         .result_src(result_src),
         .mem_write(mem_write), 
+        .mem_width(mem_width),
         .alu_control(alu_control),
         .alu_src(alu_src),
         .immediate_control(immediate_control),
