@@ -10,12 +10,12 @@ module risc_v_32_i(
     output logic [31:0] data_to_write,
     output logic writting_to_mem
 );
-    
     //connection logic between control unit
     //and data path
     //CONTROL
     logic [31:0] instruction;
     logic pc_src;
+    logic pc_target_src;
     logic [1:0] result_src;
     logic mem_write;
     logic [2:0] mem_width;
@@ -37,6 +37,7 @@ module risc_v_32_i(
         .less_than(less_than),
         .less_than_unsigned(less_than_unsigned),
         .pc_src(pc_src),
+        .pc_target_src(pc_target_src),
         .result_src(result_src),
         .mem_write(mem_write), 
         .alu_control(alu_control),
@@ -50,6 +51,7 @@ module risc_v_32_i(
         .clk(clk),
         .reset(reset),
         .pc_src(pc_src),
+        .pc_target_src(pc_target_src),
         .result_src(result_src),
         .mem_write(mem_write), 
         .mem_width(mem_width),

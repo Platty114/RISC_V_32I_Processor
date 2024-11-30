@@ -6,6 +6,7 @@ module data_path(
     input logic clk,
     input logic reset,
     input logic pc_src,
+    input logic pc_target_src,
     input logic [1:0] result_src,
     input logic mem_write, 
     input logic [2:0] mem_width,
@@ -96,8 +97,12 @@ module data_path(
         .control(immediate_control),
         .extended_src(imm_ext)
     ); 
-    
-    assign pc_target = pc + imm_ext; 
+     
+    //select pc target from either pc + imm (jal) or
+    //rs + imm (jalr)
+    assign pc_target = (pc_target_src == 1'b0) 
+        ? pc + imm_ext 
+        : alu_result; 
 
 
     //alu unit and alu multiplexer 

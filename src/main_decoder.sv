@@ -3,7 +3,7 @@
 // Based on Patterson and Patterson implementation
 //
 
-
+//decodes most control signals based on the opcode 
 module main_decoder(
     input logic [6:0] opcode,
     output logic branch,
@@ -13,19 +13,22 @@ module main_decoder(
     output logic [1:0] immediate_control,
     output logic reg_write,
     output logic [1:0] alu_op,
-    output logic jump
+    output logic jump,
+    output logic pc_target_src
 );
+    //opcodes
     localparam 
         LW = 7'b0000011,
         SW = 7'b0100011,
         R_TYPE = 7'b0110011,
         I_TYPE_ALU = 7'b0010011,
-        BEQ = 7'b1100011,
-        JAL = 7'b1101111;
+        B_TYPE = 7'b1100011,
+        JAL = 7'b1101111,
+        JALR = 7'b1100111;
 
-    logic [10:0] controls;
+    logic [11:0] controls;
 
-
+    //break down of signals from controls 
     assign { 
         branch, 
         jump, 
@@ -34,23 +37,20 @@ module main_decoder(
         alu_src, 
         immediate_control, 
         reg_write, 
-        alu_op 
+        alu_op,
+        pc_target_src
     } = controls;
 
     always_comb begin
-
         case (opcode)
-            LW:         controls = 11'b0_0_01_0_1_00_1_00; 
-            SW:         controls = 11'b0_0_xx_1_1_01_0_00;
-            R_TYPE:     controls = 11'b0_0_00_0_0_xx_1_10;
-            I_TYPE_ALU: controls = 11'b0_0_00_0_1_00_1_10; 
-            BEQ:        controls = 11'b1_0_xx_0_0_10_0_01;
-            JAL:        controls = 11'b0_1_10_0_x_11_1_xx;
-            default:    controls = 11'bx_x_xx_0_x_xx_0_xx;
+            LW:         controls = 12'b0_0_01_0_1_00_1_00_x; 
+            SW:         controls = 12'b0_0_xx_1_1_01_0_00_x;
+            R_TYPE:     controls = 12'b0_0_00_0_0_xx_1_10_x;
+            I_TYPE_ALU: controls = 12'b0_0_00_0_1_00_1_10_x; 
+            B_TYPE:     controls = 12'b1_0_xx_0_0_10_0_01_0;
+            JAL:        controls = 12'b0_1_10_0_x_11_1_xx_0;
+            JALR:       controls = 12'b0_1_10_0_1_00_1_00_1;
+            default:    controls = 12'bx_x_xx_0_x_xx_0_xx_x;
         endcase
-        
     end
-
-
-
 endmodule
