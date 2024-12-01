@@ -9,9 +9,9 @@ module decoder_tb();
     localparam period = 10;
     localparam expected_result_size = 15;
     logic [31:0] vectornum, errors;
-    logic [50:0] testvectors [10000:0];
-    logic [15:0] expected_result;
-    logic [15:0] result;
+    logic [52:0] testvectors [10000:0];
+    logic [17:0] expected_result;
+    logic [17:0] result;
     logic clk = 1;
     logic reset;
 
@@ -19,7 +19,7 @@ module decoder_tb();
     logic [31:0] instruction;
     logic [1:0] result_src;
     logic [3:0] alu_control;
-    logic [1:0] immediate_control;
+    logic [2:0] immediate_control;
     logic [2:0] mem_width;
     logic 
         equal, //input
@@ -29,7 +29,8 @@ module decoder_tb();
         pc_target_src,
         mem_write,
         alu_src,
-        reg_write;
+        reg_write,
+        u_imm_src;
 
      
     decoder uut(
@@ -38,6 +39,7 @@ module decoder_tb();
         .less_than(less_than),
         .less_than_unsigned(less_than_unsigned),
         .pc_src(pc_src),
+        .u_imm_src(u_imm_src),
         .pc_target_src(pc_target_src),
         .result_src(result_src),
         .mem_write(mem_write), 
@@ -54,6 +56,7 @@ module decoder_tb();
 
     assign result = { 
         pc_src, 
+        u_imm_src,
         pc_target_src,
         result_src, 
         mem_write, 
@@ -84,7 +87,7 @@ module decoder_tb();
             less_than_unsigned,
             expected_result
         } = testvectors[vectornum];
-        if(testvectors[vectornum] === 51'bx) begin
+        if(testvectors[vectornum] === 53'bx) begin
             $display("%d tests competed with %d errors", vectornum, errors);
             $stop;
         end

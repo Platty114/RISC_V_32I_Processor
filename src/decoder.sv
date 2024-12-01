@@ -9,13 +9,14 @@ module decoder(
     input logic         less_than,
     input logic         less_than_unsigned,
     output logic        pc_src,
+    output logic        u_imm_src,
     output logic        pc_target_src,
     output logic [1:0]  result_src,
     output logic        mem_write, 
     output logic [2:0]  mem_width,
     output logic [3:0]  alu_control,
     output logic        alu_src,
-    output logic [1:0]  immediate_control,
+    output logic [2:0]  immediate_control,
     output logic        reg_write
 );
     
@@ -44,7 +45,8 @@ module decoder(
         .reg_write(reg_write), //out
         .alu_op(alu_op), //out 
         .jump(jump), //out
-        .pc_target_src(pc_target_src) //out
+        .pc_target_src(pc_target_src), //out
+        .u_imm_src(u_imm_src)
     ); 
 
 

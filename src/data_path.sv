@@ -6,13 +6,14 @@ module data_path(
     input logic clk,
     input logic reset,
     input logic pc_src,
+    input logic u_imm_src,
     input logic pc_target_src,
     input logic [1:0] result_src,
     input logic mem_write, 
     input logic [2:0] mem_width,
     input logic [3:0] alu_control,
     input logic alu_src,
-    input logic [1:0] immediate_control,
+    input logic [2:0] immediate_control,
     input logic reg_write,
     output logic [31:0] instruction,
     output logic equal,
@@ -47,6 +48,11 @@ module data_path(
     logic [24:0] extend_src;
     //extended immediate
     logic [31:0] imm_ext;
+
+    //upper immediate data to write back
+    logic [31:0] upper_immediate;
+    //pc + imm
+    logic [31:0] pc_imm_added;
 
     assign extend_src = decoded_instruction[31:7];
 
@@ -97,13 +103,21 @@ module data_path(
         .control(immediate_control),
         .extended_src(imm_ext)
     ); 
-     
+    
+    //add imm to pc
+    assign pc_imm_added = pc + imm_ext;
+
     //select pc target from either pc + imm (jal) or
     //rs + imm (jalr)
     assign pc_target = (pc_target_src == 1'b0) 
-        ? pc + imm_ext 
+        ? pc_imm_added 
         : alu_result; 
 
+    //select upper immediate data as either imm or imm + pc
+    //(lui) vs (auipc)
+    assign upper_immediate = (u_imm_src == 1'b0)
+        ? imm_ext
+        : pc_imm_added;
 
     //alu unit and alu multiplexer 
     assign alu_src_B = (alu_src == 1'b1) ? imm_ext : rs_2;  
@@ -137,6 +151,7 @@ module data_path(
             2'b00:  write_back_data = alu_result;
             2'b01:  write_back_data = loaded_data;
             2'b10:  write_back_data = pc_plus_4;
+            2'b11:  write_back_data = upper_immediate;
             default: write_back_data = 32'hxxxx_xxxx;
 
         endcase
