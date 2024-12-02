@@ -30,7 +30,7 @@ module top(
         .locked(locked),
         .clk(clk)
     );
-   
+     
 
     //risc-v processer
     risc_v_32_i PROCESSOR(
@@ -38,19 +38,17 @@ module top(
         .reset(reset_in),
         .value_from_alu(value_from_alu),
         .data_to_write(data_to_write),
-        .writting_to_mem(writting_to_mem)
+        .writting_to_mem(writting_to_mem),
+        .address_100(value_to_display)
     );
     
     assign LED = value_from_alu[15:0];
 
-    //display 1
+    //display 1, modified for nexsys 4 board
     seven_segment_display_subsystem DISPLAY_1(
         .clk(clk),
         .reset(reset_in),
-        .sec_dig1(value_to_display[3:0]),
-        .sec_dig2(value_to_display[7:4]),
-        .min_dig1(value_to_display[11:8]),
-        .min_dig2(value_to_display[15:12]),
+        .number(value_to_display),
         .CA(CA),
         .CB(CB),
         .CC(CC),
@@ -62,7 +60,11 @@ module top(
         .AN1(AN[0]),
         .AN2(AN[1]),
         .AN3(AN[2]),
-        .AN4(AN[3])
+        .AN4(AN[3]),
+        .AN5(AN[4]),
+        .AN6(AN[5]),
+        .AN7(AN[6]),
+        .AN8(AN[7])
     );
 
 endmodule

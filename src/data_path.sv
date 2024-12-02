@@ -20,7 +20,8 @@ module data_path(
     output logic less_than,
     output logic less_than_unsigned,
     output logic [31:0] value_from_alu,
-    output logic [31:0] data_to_write
+    output logic [31:0] data_to_write,
+    output logic [31:0] address_100
 );
     //pc, pc_plus_4 and  
     //target adress for jump / branch
@@ -141,7 +142,8 @@ module data_path(
         .mem_width(mem_width),
         .addr(alu_result),
         .write_data(rs_2),
-        .read_data(loaded_data)
+        .read_data(loaded_data),
+        .address_100(address_100)
     ); 
 
 

@@ -8,6 +8,7 @@ module risc_v_32_i(
     input logic reset,
     output logic [31:0] value_from_alu,
     output logic [31:0] data_to_write,
+    output logic [31:0] address_100,
     output logic writting_to_mem
 );
     //connection logic between control unit
@@ -68,7 +69,8 @@ module risc_v_32_i(
         .less_than(less_than),
         .less_than_unsigned(less_than_unsigned),
         .value_from_alu(value_from_alu),
-        .data_to_write(data_to_write)
+        .data_to_write(data_to_write),
+        .address_100(address_100)
     );
 
 endmodule

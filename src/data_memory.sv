@@ -6,12 +6,13 @@
 //
 
 module data_memory(
-    input   logic clk,
-    input   logic write_enable,
-    input   logic [2:0] mem_width,
-    input   logic [31:0] addr,
-    input   logic [31:0] write_data,
-    output  logic [31:0] read_data
+    input   logic         clk,
+    input   logic         write_enable,
+    input   logic [2:0]   mem_width,
+    input   logic [31:0]  addr,
+    input   logic [31:0]  write_data,
+    output  logic [31:0]  read_data,
+    output  logic [31:0]  address_100
 );
     //values for decoding memory read //write width
     localparam 
@@ -42,6 +43,11 @@ module data_memory(
     //read data is combinational based on addr
     //data is read no matter what, even on write
     assign existing_word = data[addr[31:2]];
+    
+    always_ff @(negedge clk) begin
+        if(write_enable == 1'b1)
+            address_100 <= write_data;
+    end
      
     //assign read data based on width
     always_comb begin

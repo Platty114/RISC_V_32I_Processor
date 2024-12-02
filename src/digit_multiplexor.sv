@@ -37,21 +37,22 @@
 //------------------------------------------------------------------------------
 
 module digit_multiplexor (
-    input  logic [3:0] sec_dig1,
-    input  logic [3:0] sec_dig2,
-    input  logic [3:0] min_dig1,
-    input  logic [3:0] min_dig2,
-    input  logic [3:0] selector,
-    output logic [3:0] time_digit
+    input  logic [31:0] number,
+    input  logic [7:0] selector,
+    output logic [3:0] digit
 );
 
     always_comb begin
         case (selector)
-            4'b0001: time_digit = sec_dig1;   // display seconds digit
-            4'b0010: time_digit = sec_dig2;   // display tens of seconds digit
-            4'b0100: time_digit = min_dig1;   // display minutes digit
-            4'b1000: time_digit = min_dig2;   // display tens of minutes digit
-            default: time_digit = 4'b0000;    // default case
+            8'b00000001: digit = number[3:0];   
+            8'b00000010: digit = number[7:4];   
+            8'b00000100: digit = number[11:8];  
+            8'b00001000: digit = number[15:12];   
+            8'b00010000: digit = number[19:16];   
+            8'b00100000: digit = number[23:20];   
+            8'b01000000: digit = number[27:24];  
+            8'b10000000: digit = number[31:28];   
+            default: digit = 8'b00000000;    // default case
         endcase
     end
 

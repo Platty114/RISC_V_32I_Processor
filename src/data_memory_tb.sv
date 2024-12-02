@@ -14,6 +14,7 @@ module data_memory_tb();
     logic [31:0] addr;
     logic [31:0] write_data;
     logic [31:0] read_data;
+    logic [31:0] address_100; // unused memory map for outputing to display
     logic [2:0] mem_width;
 
     data_memory uut(
@@ -22,7 +23,8 @@ module data_memory_tb();
         .mem_width(mem_width),
         .addr(addr),
         .write_data(write_data),
-        .read_data(read_data)
+        .read_data(read_data),
+        .address_100(address_100)
     );
 
     always begin

@@ -7,13 +7,15 @@ module risc_v_32_i_tb();
     logic clk; 
     logic reset; 
     logic [31:0] WriteData, DataAdr; 
+    logic [31:0] address_100; // unused in test
     logic MemWrite; // instantiate device to be tested 
     risc_v_32_i dut(
         .clk(clk), 
         .reset(reset), 
         .value_from_alu(DataAdr), 
         .data_to_write(WriteData), 
-        .writting_to_mem(MemWrite)
+        .writting_to_mem(MemWrite),
+        .address_100(address_100)
     ); // initialize test 
 
     initial begin 

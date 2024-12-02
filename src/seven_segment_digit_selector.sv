@@ -36,17 +36,17 @@
 module seven_segment_digit_selector (
     input logic        clk,
     input logic        reset,
-    output logic [3:0] digit_select,
-    output logic [3:0] an_outputs
+    output logic [7:0] digit_select,
+    output logic [7:0] an_outputs
 );
 
-    logic [3:0] d, q;
-    logic [16:0] count;
+    logic [7:0] d, q;
+    logic [14:0] count;
 
-    // 1 kHz clock process (100 MHz / 2^17 = 762.9 Hz)
+    // 1 kHz clock process (25 MHz / 2^15 = 762.9 Hz)
     always_ff @(posedge clk) begin
         if (reset) begin
-            count <= 17'b0;
+            count <= 15'b0;
         end else begin
             count <= count + 1;
         end
@@ -56,11 +56,11 @@ module seven_segment_digit_selector (
     always_ff @(posedge clk) begin
         if (reset) begin
             // Reset state values for q
-            q <= 4'b1111;
-        end else if (count == 17'b0) begin
+            q <= 8'b11111111;
+        end else if (count == 15'b0) begin
             // Propagate signals through the DFF
             if (q[0] && q[1]) begin
-                q <= 4'b1000;
+                q <= 8'b10000000;
             end else begin
                 q <= d;
             end
@@ -68,10 +68,19 @@ module seven_segment_digit_selector (
     end
 
     // Connect the DFFs into a chain/loop
-    assign d[0] = q[3];
+    //assign d[0] = q[3];
+    //assign d[1] = q[0];
+    //assign d[2] = q[1];
+    //assign d[3] = q[2];
+    
+    assign d[0] = q[7];
     assign d[1] = q[0];
     assign d[2] = q[1];
     assign d[3] = q[2];
+    assign d[4] = q[3];
+    assign d[5] = q[4];
+    assign d[6] = q[5];
+    assign d[7] = q[6];
 
     // Output assignments
     assign digit_select = q;
