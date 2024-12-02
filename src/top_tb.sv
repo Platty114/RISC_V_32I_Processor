@@ -28,8 +28,7 @@ module top_tb();
 
 
     initial begin
-        #1500;
-        reset = 1'b1; display_switch = 1'b0; #100;
+        reset = 1'b1; display_switch = 1'b0; #2000;
         
         
 

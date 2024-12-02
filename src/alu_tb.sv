@@ -18,12 +18,16 @@ module alu_tb();
     logic [31:0] A;
     logic [31:0] B;
     logic [31:0] result;
+    logic alu_src;
     logic equal;
     logic less_than;
     logic less_than_unsigned;
 
+    assign alu_src = 1'b0; // test cases don't consider edge case for srai
+
     alu uut(
         .alu_control(alu_control),
+        .alu_src(alu_src),
         .A(A),
         .B(B),
         .result(result),

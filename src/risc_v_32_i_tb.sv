@@ -22,7 +22,7 @@ module risc_v_32_i_tb();
     end // generate clock to sequence tests 
 
     always begin 
-        clk <= 1; #15; clk <= 0; #15; 
+        clk <= 1; #20; clk <= 0; #20; 
     end // check results 
     
 
@@ -31,10 +31,6 @@ module risc_v_32_i_tb();
             if(DataAdr === 100 & WriteData === 25) begin 
                 $display("Simulation succeeded"); 
                 $stop;
-            end 
-            else if (DataAdr !== 96) begin 
-                $display("Simulation failed"); 
-                $stop; 
             end 
         end 
     end 

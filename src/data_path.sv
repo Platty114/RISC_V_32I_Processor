@@ -124,6 +124,7 @@ module data_path(
 
     alu ALU(
         .alu_control(alu_control),
+        .alu_src(alu_src),
         .A(rs_1),
         .B(alu_src_B),
         .result(alu_result),
@@ -137,6 +138,7 @@ module data_path(
     data_memory DATA_MEM(
         .clk(clk),
         .write_enable(mem_write),
+        .mem_width(mem_width),
         .addr(alu_result),
         .write_data(rs_2),
         .read_data(loaded_data)

@@ -3,7 +3,6 @@
 module top(
     input logic clk_100,
     input logic reset,
-    input logic display_switch,
     output logic CA, CB, CC, CD, CE, CF, CG, DP,
     output logic [7:0] AN,
     output logic [15:0] LED
@@ -13,17 +12,15 @@ module top(
     logic [31:0] data_to_write;
     logic [31:0] value_to_display;
     logic writting_to_mem;
-    logic reset_buffer, reset_in;
+    logic reset_in;
     logic clk;
     logic locked;
-    logic pll_reset;
     
-    always_ff @(posedge clk)begin
-        reset_buffer <= reset;
-        reset_in <= reset_buffer;
-    end
-    
-    assign value_to_display = (display_switch == 1'b1) ? data_to_write : value_from_alu;
+    reset_buffer RESET_BUFFER(
+        .clk(clk),
+        .reset(reset),
+        .system_reset(reset_in)
+    ); 
     
     //used to divide the 100Mhz clock into a 25Mhz clock
     //on the nexus 4

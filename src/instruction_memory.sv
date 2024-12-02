@@ -12,11 +12,11 @@ module instruction_memory
 );
 
   //create a memory cell that is rows x word_size
-  logic [31:0] RAM [63:0];
+  logic [31:0] RAM [127:0];
   
   //initialize memory based on file
   initial begin
-    $readmemh("instruction_mem.mem", RAM); 
+    $readmemh("final_instruction_set.mem", RAM); 
   end
 
   //output word alligned instruction

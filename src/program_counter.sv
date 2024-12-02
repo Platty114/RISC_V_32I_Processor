@@ -23,9 +23,9 @@ module program_counter(
             pc <= 32'h0000_0000;
         end
         else begin
-            if(pc != 32'h0000_004C) begin
+            //if(pc != 32'h0000_004C) begin
                 pc <= pc_next;
-            end
+            //end
         end
     end
 

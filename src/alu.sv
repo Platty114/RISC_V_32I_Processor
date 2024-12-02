@@ -6,13 +6,14 @@
 // provides flags for when A == B, A < B, and A < B unsigned
 
 module alu(
-    input logic [3:0] alu_control,
-    input logic [31:0] A,
-    input logic [31:0] B,
+    input logic [3:0]   alu_control,
+    input logic         alu_src, // used to tell if B is an immediate for sll, srl
+    input logic [31:0]  A,       // and sra
+    input logic [31:0]  B,
     output logic [31:0] result,
-    output logic equal,
-    output logic less_than,
-    output logic less_than_unsigned
+    output logic        equal,
+    output logic        less_than,
+    output logic        less_than_unsigned
 );
 
     //calculate all possible values, then chose correct one
@@ -34,9 +35,15 @@ module alu(
     assign logical_xor = A ^ B;
     assign logical_or = A | B;
     assign logical_and = A & B;
-    assign logical_sll = A << B;
-    assign logical_srl = A >> B;
-    assign arithmetic_sra = $signed(A) >>> B;
+    assign logical_sll = (alu_src == 1'b0) 
+        ? A << B 
+        : A << B[4:0]; //handle edge case for slli as immediate is only 4 -> 0
+    assign logical_srl = (alu_src == 1'b0) 
+        ? A >> B
+        : A >> B[4:0]; //handle edge case for srli as immediate is only 4 -> 0
+    assign arithmetic_sra = (alu_src == 1'b0) 
+        ? $signed(A) >>> B
+        : $signed(A) >>> B[4:0]; //handle edge case for srai as immediate is only 4 -> 0
     assign logical_slt = $signed(A) < $signed(B) ? 32'h0000_0001 : 32'h0000_0000;
     assign logical_sltu = A < B ? 32'h0000_0001 : 32'h0000_0000;
     assign equal = subtraction == 0 ? 1'b1 : 1'b0;

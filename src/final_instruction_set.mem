@@ -1,0 +1,167 @@
+// this is a set of instructions that will run every 
+// instruction in the risc-v32I instruction set
+// besides ecall and ebreak (we have no OS, so I didn't implement them)
+// I have borrowed many of these instructions from the 
+// harrison and harrison testbench, but have added onto 
+// it to test the other implemented instructions
+// main: 
+//harrison and harrison
+// addi x2, x0, 5
+00500113 
+//extra tests -------------------
+// addi x9, x0, 1
+00100493
+// sltu x9, x0, x9    x9 should be 1 still
+009034b3
+// slti x9, x9, -1    x9 should be 0
+fff4a493
+// sltiu x9, x9, -1   x9 should be 1
+fff4b493
+// xor x2, x2, x9     x2 should should now be 4
+00914133
+// xor x2, x2, x9     x2 now if we do it again, x2 should be 5 
+00914133
+// sll x2, x2, x9     shift left 1
+00911133
+// sll x2, x2, x9     shift left 1 again
+00911133
+// srl x2, x2, x9     shift right 1
+00915133
+// sra x2, x2, x9     shift right again (x2 should be 5)
+40915133
+// andi x2, x2, 5 x2  should should still be 5
+00517113
+// xori x2, x2, 5 x2  should now be 0 
+00514113
+// ori x2, x2, 5 x2   should now be 5 again 
+00516113
+// slli x2, x2, 4     shift left 4
+00411113
+// srli x2, x2, 2     shift right 2
+00215113
+// srai x2, x2, 2     shift right again (x2 should be 5)
+40215113
+// end of extra -----------------
+// addi x3, x0, 12 
+00C00193
+// addi x7, x3, -9
+FF718393
+// or x4, x7, x2
+0023E233
+// and x5, x3, x4
+0041F2B3
+// add x5, x5, x4
+004282B3
+// beq x5, x7, end
+02728863
+// slt x4, x3, x4
+0041A233
+// beq x4, x0, around
+00020463
+// addi x5, x0, 0
+00000293
+// around: slt x4, x7, x2
+0023A233
+// add x7, x4, x5
+005203B3
+// sub x7, x7, x2
+402383B3
+// sw x7, 84(x3)
+0471AA23
+// lw x2, 96(x0)
+06002103
+// testing lui, and sb, lb, sh, lh instrs --------------------
+// lui x13, 0xFFFFF         fill x13 with 0xFFFFF000
+fffff6b7
+// addi x13, x13, 0xFFF     fill x13 with 0xFFFFFFFF
+fff68693
+// sw x13, 0(x0)            store x13 at address 0x0
+00d02023
+// addi x14, x0, 0x90 
+09000713
+// sb x14, 0(x0)
+00e00023
+// lb x15, 0(x0)            store 0x90 at address 0x0, retrieve it
+00000783
+// lbu x16, 0(x0)           and test if lb and lbu are the same
+00004803
+// bne x15, x16, 0x8        should be taken
+01079463
+// addi x2, x2, 1           shouldn't execute
+00110113
+// sh x14, 0(x0)      
+00e01023
+// lh x15, 0(x0)            store 0x0090 and pull them using
+00001783
+// lhu x16, 0(x0)           lh and lhu
+00005803
+// beq x15, x16, 0x8        should be taken
+01078463
+// addi x2, x2, 1
+00110113
+//01079c63
+// end inserted tests ---------------------
+// add x9, x2, x5
+005104B3
+// TESTING BRANCH INSTRUCTIONS -----------------
+// addi x13, x0, 0          set x13 to 0
+00000693
+// addi x14, x0, 1          set x14 to 1
+00100713
+// beq x13, x14, 0x8        shouldn't be taken
+00e68463
+// beq x13, x13, bne        should be taken
+00d68463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// bne:
+// bne x13, x13, 0x8        shouldn't be taken
+00d69463
+// bne x13, x14, blt        should be taken
+00e69463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// blt:
+// blt x14, x13, 0x8        shouldn't be taken
+00d74463
+// blt x13, x14, bge        should be taken
+00e6c463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// bge:
+// bge x13, x14, 0x8        shouldn't be taken
+00e6d463
+// bge x14, x13, bltu       should be taken
+00d75463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// bltu:
+// bltu x14, x13, 0x8       shouldn't be taken
+00d76463
+// bltu x13, x14, bgeu      should be taken
+00e6e463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// bgeu:
+// bgeu x13, x14, 0x8       shouldn't be taken
+00e6f463
+// bgeu x14, x13, endBT     should be taken
+00d77463
+// addi x2, x2, 1           shouldn't get executed
+00110113
+// endBT:
+// END TESTING BRANCH INSTRUCTIONS
+// jal x3, end
+008001EF
+// badBranch:
+// addi x2, x0, 1
+00100113
+// end: add x2, x2, x9
+00910133
+// sw x2, 100(x0)
+06202223
+// TEST JALR and AUIPC  should loop forever
+// done: auipc x17, 0
+00000897
+// jalr x18, 0(x17)
+00088967
