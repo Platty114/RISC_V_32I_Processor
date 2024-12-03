@@ -1,11 +1,11 @@
-
+// top.sv
+// James Platt 30130627
 
 module top(
     input logic clk_100,
     input logic reset,
     output logic CA, CB, CC, CD, CE, CF, CG, DP,
-    output logic [7:0] AN,
-    output logic [15:0] LED
+    output logic [7:0] AN
 );
 
     logic [31:0] value_from_alu;
@@ -41,8 +41,6 @@ module top(
         .writting_to_mem(writting_to_mem),
         .address_100(value_to_display)
     );
-    
-    assign LED = value_from_alu[15:0];
 
     //display 1, modified for nexsys 4 board
     seven_segment_display_subsystem DISPLAY_1(

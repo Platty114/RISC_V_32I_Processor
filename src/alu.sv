@@ -17,7 +17,6 @@ module alu(
 );
 
     //calculate all possible values, then chose correct one
-    
     logic [31:0] 
         addition, 
         subtraction,

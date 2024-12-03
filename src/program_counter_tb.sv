@@ -8,16 +8,12 @@ module program_counter_tb();
     localparam period = 10;
     //tb signals
     logic clk = 1'b0, reset, pc_src;
-    logic clk_enable;
     logic [31:0] pc, pc_target, pc_plus_4;
-
-    assign clk_enable = clk;
 
     program_counter uut(
         .pc_target(pc_target),
         .pc_src(pc_src),
         .clk(clk),
-        .clk_enable(clk_enable),
         .reset(reset),
         .pc(pc),
         .pc_plus_4(pc_plus_4)

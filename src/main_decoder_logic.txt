@@ -1,11 +1,14 @@
-inst |  opcode  | branch | jump | res_src | mem_write | alu_src | immediate | reg_write | alu_op
-LW     0000011      0       0       01          0          1         00          1          00
-SW     0100011      0       0       xx          1          1         01          0          00
-Rtype  0110011      0       0       00          0          0         xx          1          10
+inst |  opcode  | branch | jump | res_src | mem_write | alu_src | immediate | reg_write | alu_op | pc_target | u_imm |
+LW     0000011      0       0       01          0          1         000         1          00         x         x
+SW     0100011      0       0       xx          1          1         001         0          00         x         x
+Rtype  0110011      0       0       00          0          0         xxx         1          10         x         x
 Itype
-ALU    0010011      0       0       00          0          1         00          1          10
-beq    1100011      1       0       xx          0          0         10          0          01 
-jal    1101111      0       1       10          0          x         11          1          xx
+ALU    0010011      0       0       00          0          1         000         1          10         x         x
+beq    1100011      1       0       xx          0          0         010         0          01         0         x
+jal    1101111      0       1       10          0          x         011         1          xx         0         x
+jalr   1100111      0       1       10          0          1         000         1          00         1         x
+lui                 0       0       11          0          x         100         1          xx         x         0
+auipc               0       0       11          0          x         100         1          xx         x         1
 
 
 

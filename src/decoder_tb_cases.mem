@@ -1,3 +1,4 @@
+// decoder_tb_cases.mem
 //test cases for control unit
 //format is as follows
 //instruction | alu_signals | expected

@@ -6,6 +6,7 @@ module data_memory_tb();
 
     //test signals 
     localparam period =10;
+    localparam data_mem_size = 200;
     logic error;
 
     //uut signals
@@ -37,7 +38,7 @@ initial begin
     //holds to come down
     //#100;
     
-    for(int i =0; i < 200 ; i = i + 4) begin
+    for(int i =0; i < data_mem_size ; i = i + 4) begin
         
         //write F0F0_F0F0 into address 0000_0000
         write_enable = 1; 

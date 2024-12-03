@@ -2,7 +2,7 @@
 //James Platt 30130627
 //module containing 32 32bit
 //registers for RISC-V32I implementation
-//Writes occur on rising edge
+//Writes occur on falling edge
 //
 
 module reg_file(
@@ -20,11 +20,11 @@ module reg_file(
 
     //read data is combinational based on addr
     //in the case x0 is read, output should be 0
-    assign read_data_1 = (addr_1 != 5'b0000) 
+    assign read_data_1 = (addr_1 != 5'b00000) 
         ? registers[addr_1]
         : 32'h0000_0000;
 
-    assign read_data_2 = (addr_2 != 5'b0000) 
+    assign read_data_2 = (addr_2 != 5'b00000) 
         ? registers[addr_2]
         : 32'h0000_0000;
     

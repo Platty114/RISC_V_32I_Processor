@@ -45,7 +45,7 @@ module data_memory(
     assign existing_word = data[addr[31:2]];
     
     always_ff @(negedge clk) begin
-        if(write_enable == 1'b1)
+        if(write_enable == 1'b1 & addr == 32'h0000_0064)
             address_100 <= write_data;
     end
      
