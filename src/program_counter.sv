@@ -7,6 +7,7 @@ module program_counter(
     input logic pc_src,
     input logic clk,
     input logic reset,
+    input logic enable_n,
     output logic [31:0] pc,
     output logic [31:0] pc_plus_4
 );
@@ -23,9 +24,7 @@ module program_counter(
             pc <= 32'h0000_0000;
         end
         else begin
-            //if(pc != 32'h0000_004C) begin
-                pc <= pc_next;
-            //end
+            pc <= pc_next;
         end
     end
 
