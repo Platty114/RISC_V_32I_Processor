@@ -47,17 +47,28 @@ module if_stage_tb();
 	reset = 1'b1;
 	pc_src = 1'b0;
 	stall_if = 1'b0;
+	#(period / 2);
 
 	//there are 71 total instructions in the final instruction set file,
 	//so go through all of them and make sure the instruction mem properly
 	//reads them.
 	for(int i =0; i < number_of_instrs; i++) begin
 	    //set the address and expected_instruction 
-	    addr = i * 4;
 	    expected_instruction = testvectors[i];
 	    vectornum += 1;
 	    #(period / 2);
 	    //now check the data was read correctly 
+	    if(rd_instr != expected_instruction) begin
+		$display("Failed to read data for %d", i);
+		errors += 1;
+	    end
+
+	    //now check if stalling the register works
+	    //by stalling for 3 periods
+	    stall_if = 1'b1;
+	    #(3 * period/2);
+
+	    //check if the same instruction is still being fetched
 	    if(rd_instr != expected_instruction) begin
 		$display("Failed to read data for %d", i);
 		errors += 1;

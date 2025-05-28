@@ -50,7 +50,6 @@ module alu(
     assign less_than_unsigned = logical_sltu == 0 ? 1'b0 : 1'b1;
 
 
-
     always_comb begin 
         case (alu_control)
             4'b0000: result = addition;
